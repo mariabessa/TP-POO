@@ -1,8 +1,11 @@
 #ifndef VENDEDOR_H
 #define VENDEDOR_H
 #include "Funcionario.h"
+#include <iostream>
 
 class Vendedor : public Funcionario{
+    friend class Chefe;
+    friend class Supervisor;
     private: 
         double vendas;
     public:

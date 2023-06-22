@@ -1,12 +1,17 @@
 #ifndef CHEFE_H
 #define CHEFE_H
+#include "Pessoa.h"
+#include "Supervisor.h"
+#include "Vendedor.h"
+#include <vector>
+#include <iostream>
 
-#include "Funcionario.h"
 
 class Chefe : public Pessoa{
     private:
         string usuario;
         string senha;
+        vector<Funcionario*> listaFuncionarios;
         //atributos devem ser estaticos
         //chefe tem uma lista de funcionarios
         //Funcionario tbm tem usuario e senha, deveria ser um atributo de pessoa??

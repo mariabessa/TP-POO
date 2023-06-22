@@ -10,9 +10,7 @@ class Pessoa {
     public:
         Pessoa(string);
         ~Pessoa() { }
-        void setNome(string);
         void imprime();
-
 };
 
 #endif

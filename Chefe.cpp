@@ -1,5 +1,6 @@
 #include "Chefe.h"
 
+
 Chefe :: Chefe (string nome, string user, string s) : Pessoa{nome}, usuario{user}, senha{s} { }
 
 bool Chefe :: logar(string user, string s){
