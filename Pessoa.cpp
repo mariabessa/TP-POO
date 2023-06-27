@@ -1,26 +1,26 @@
 #include "Pessoa.h"
 
 Pessoa::Pessoa(
-    const string nome, const string usuario, const string senha
+    const std::string nome, const std::string usuario, const std::string senha
 ): nome(nome), usuario(usuario), senha(senha) {}
 
-void Pessoa::setNome(string nome) {
+void Pessoa::setNome(std::string nome) {
     this->nome = nome;
 }
-string Pessoa::getNome() const {
+std::string Pessoa::getNome() const {
     return nome;
 }
 
-void Pessoa::setUsuario(string usuario) {
+void Pessoa::setUsuario(std::string usuario) {
     this->usuario = usuario;
 }
-string Pessoa::getUsuario() const {
+const std::string &Pessoa::getUsuario() const {
     return usuario;
 }
 
-void Pessoa::setSenha(string senha) {
+void Pessoa::setSenha(std::string senha) {
     this->senha = senha;
 }
-string Pessoa::getSenha() const {
+const std::string &Pessoa::getSenha() const {
     return senha;
 }

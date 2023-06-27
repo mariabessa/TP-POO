@@ -8,21 +8,21 @@ using namespace std;
 
 class Pessoa {
     private:
-        string nome;
-        string usuario;
-        string senha;
+        std::string nome;
+        std::string usuario;
+        std::string senha;
     public:
-        Pessoa(const string = "", const string = "", const string = "");
+        Pessoa(const std::string = "", const std::string = "", const std::string = "");
         virtual ~Pessoa();
 
-        void setNome(string);
-        string getNome() const;
+        void setNome(std::string);
+        std::string getNome() const;
 
-        void setUsuario(string);
-        string getUsuario() const;
+        void setUsuario(std::string);
+        const std::string &getUsuario() const;
 
-        void setSenha(string);
-        string getSenha() const;
+        void setSenha(std::string);
+        const std::string &getSenha() const;
 };
 
 #endif

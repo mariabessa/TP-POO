@@ -2,6 +2,8 @@
 #define FUNCIONARIO
 
 #include <iostream>
+#include <string>
+
 #include "Pessoa.h"
 #include "Hora.h"
 
@@ -15,12 +17,12 @@ class Funcionario : public Pessoa {
         Hora tempoTrabalhado;
         Hora horasPendentes;
     private:
-        string funcao;
+        std::string funcao;
         TipoFuncionario tipo;
     public:
         Funcionario(
-            const string = "", const string = "", const string = "",
-            const float = 0.0, const Hora, const Hora, const string = "",
+            const std::string = "", const std::string = "", const std::string = "",
+            const float = 0.0, const Hora, const Hora, const std::string = "",
             const TipoFuncionario = TipoFuncionario::Vendedor
         );
         virtual ~Funcionario();
@@ -36,18 +38,23 @@ class Funcionario : public Pessoa {
         void setHorasPendentes(Hora);
         Hora getHorasPendentes() const;
 
-        void setFuncao(string);
-        string getFuncao() const;
+        void setFuncao(std::string);
+        const std::string &getFuncao() const;
         
         void setTipo(TipoFuncionario);
         TipoFuncionario getTipo() const;
 
         // Funções
 
-        bool cadastrarPonto(Hora, Hora);
-        double calcularSalario();
-        // bonificacao()    // Funcao que aumenta salario do funcionario
+        void cadastrarPonto();
+        void calcularSalario();
+        void bonificacao();    // Funcao que aumenta salario do funcionario
         // void ImprimeSalario();
+
+    // private:
+    protected:
+        bool ponto(Hora, Hora, Hora*, int*, int*);
+        float calculoSalarioPorHoras(TipoFuncionario);
 };
 
 #endif

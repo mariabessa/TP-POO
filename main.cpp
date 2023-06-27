@@ -1,3 +1,7 @@
+#include "Chefe.h"
+#include "Funcionario.h"
+#include "Supervisor.h"
+
 #include <iostream>
 
 using namespace std;
@@ -101,8 +105,13 @@ bool login(int tipoLogin, string usuario, string senha) {
     
     // Procura se o usuario e senha existem na lista de Chefes
     if(tipoLogin == 0) {
+        Chefe *chefe = new Chefe();
         // Uma maneira de procurar todos os chefes
         // E examinar usuario e senha de cada chefe
+        if(chefe->logar(usuario, senha))
+            cout << "Logou." << endl;
+        else
+            cout << "Não logou." << endl;
 
         // for(quant de chefes)
             // if (chefe->getUsuario == usuario && chefe->getSenha == senha)
