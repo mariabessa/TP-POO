@@ -12,7 +12,7 @@
 class Supervisor : public Funcionario {
     // friend class Chefe;
     private:
-        vector<Vendedor> vendedores;
+        vector<Vendedor*> vendedores;
         
         float bonificacao();
     public:
@@ -20,7 +20,7 @@ class Supervisor : public Funcionario {
             const string = "", const string = "", const string = "",
             const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
             const string = "", const TipoFuncionario = TipoFuncionario::Vendedor,
-            const vector<Vendedor> = vector<Vendedor>()
+            const vector<Vendedor*> = vector<Vendedor*>()
         );
         // virtual ~Supervisor();
         

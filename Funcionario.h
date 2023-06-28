@@ -55,8 +55,8 @@ class Funcionario : public Pessoa {
         // void ImprimeSalario();
 
     // private:
-    protected:
         bool ponto(Hora, Hora, Hora*, int*, int*);
+    // protected:
         float calculoSalarioPorHoras(TipoFuncionario);
 };
 

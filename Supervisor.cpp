@@ -5,7 +5,7 @@ Supervisor::Supervisor(
     const string nome, const string usuario, const string senha,
     const float salarioPorHora, const Hora& tempoTrabalhado,
     const Hora& horasPendentes, const string funcao, const TipoFuncionario tipo,
-    const vector<Vendedor> vendedores
+    const vector<Vendedor*> vendedores
 ): Funcionario(
         nome, usuario, senha, salarioPorHora, tempoTrabalhado, 
         horasPendentes, funcao, tipo
@@ -52,9 +52,9 @@ float Supervisor::bonificacao() {
     float valorTotal = 0.0;
 
     for(auto i = this->vendedores.begin(); i != this->vendedores.end(); ++i) {
-        vector<Venda> vendas = (*i).getVendas();
+        vector<Venda*> vendas = (*i)->getVendas();
         for(auto j = vendas.begin(); j != vendas.end(); ++j)
-            valorTotal += (*j).getValor() * 0.01;
+            valorTotal += (*j)->getValor() * 0.01;
     }
     
     return valorTotal;

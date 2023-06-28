@@ -43,17 +43,17 @@ TipoFuncionario Funcionario::getTipo() const {
     return tipo;
 }
 
-bool Ponto(Hora inicio, Hora fim, Hora *horasPendentes, int *horasTrabalhado, int *minutosTrabalhado) {
+bool Funcionario::ponto(Hora inicio, Hora fim, Hora* horasPendentes, int* horasTrabalhado, int* minutosTrabalhado) {
     *horasTrabalhado = fim.getHoras() - inicio.getHoras();
     *minutosTrabalhado = fim.getMinutos() - inicio.getMinutos();
 
-    if(*minutosTrabalhado < 0) {
+    if (*minutosTrabalhado < 0) {
         *horasTrabalhado--;
         *minutosTrabalhado += 60;
     }
 
-    // Impede q o funcionário trabalhe mais que 10 horas por dia
-    if(*horasTrabalhado > 10 || (*horasTrabalhado == 10 && *minutosTrabalhado > 0)) {
+    // Impede que o funcionário trabalhe mais que 10 horas por dia
+    if (*horasTrabalhado > 10 || (*horasTrabalhado == 10 && *minutosTrabalhado > 0)) {
         cout << "O funcionário trabalhou mais que 10 horas no dia.\n" << endl;
         cout << "Não será possível cadastrar o ponto.\n" << endl;
         cout << "Tente novamente.\n" << endl;
@@ -61,17 +61,17 @@ bool Ponto(Hora inicio, Hora fim, Hora *horasPendentes, int *horasTrabalhado, in
     }
 
     // Hora horasPendentes = this->getHorasPendentes();
-    
+
     // Se o funcionário trabalhar mais que 8 horas no dia
-    // atribuimos essas horas extras para outra variavel
-    if(*horasTrabalhado <= 10 && (*horasTrabalhado == 8 && *minutosTrabalhado > 0)) { 
+    // atribuímos essas horas extras para outra variável
+    if (*horasTrabalhado <= 10 && (*horasTrabalhado == 8 && *minutosTrabalhado > 0)) {
         int horasExtras = *horasTrabalhado - 8;
         int minutosExtras = *minutosTrabalhado;
 
         (*horasPendentes).setHoras((*horasPendentes).getHoras() + horasExtras);
         (*horasPendentes).setMinutos((*horasPendentes).getMinutos() + minutosExtras);
 
-        if((*horasPendentes).getMinutos() >= 60)  {
+        if ((*horasPendentes).getMinutos() >= 60) {
             (*horasPendentes).setHoras((*horasPendentes).getHoras() + 1);
             (*horasPendentes).setMinutos((*horasPendentes).getMinutos() - 60);
         }

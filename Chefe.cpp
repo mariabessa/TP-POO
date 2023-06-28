@@ -2,23 +2,25 @@
 
 Chefe::Chefe(
     const string nome, const string usuario, const string senha,
-    const vector<Funcionario> funcionarios
+    const vector<Funcionario*> funcionarios
 ):  Pessoa(nome, usuario, senha), funcionarios(funcionarios) {}
 
-void Chefe::setFuncionarios(vector<Funcionario> funcionarios) {
+void Chefe::setFuncionarios(vector<Funcionario*> funcionarios) {
     this->funcionarios = funcionarios;
 }
-vector<Funcionario> Chefe::getFuncionarios() const {
+vector<Funcionario*> Chefe::getFuncionarios() const {
+    // return this->funcionarios;
     return this->funcionarios;
 }
 
-void Chefe::adicionarFuncionario(Funcionario funcionario) {
+void Chefe::adicionarFuncionario(Funcionario* funcionario) {
     this->funcionarios.push_back(funcionario);
 }
 
 void Chefe::listarFuncionarios() {
     for (auto i = this->funcionarios.begin(); i != this->funcionarios.end(); ++i)
-        cout << (*i).getNome() << endl;
+        // cout << (*i).getNome() << endl;
+        cout << (*i)->getNome() << endl;
 }
 
 bool Chefe::logar(string usuario, string senha) {

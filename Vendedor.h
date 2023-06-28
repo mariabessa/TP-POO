@@ -13,22 +13,25 @@ using namespace std;
 
 class Vendedor : public Funcionario {
     private:
-        vector<Venda> vendas;
+        vector<Venda*> vendas;
         
         float bonificacao();
+        // float bonificacao() override {}
     public:
         Vendedor(
             const string = "", const string = "", const string = "",
             const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
             const string = "", const TipoFuncionario = TipoFuncionario::Vendedor, 
-            const vector<Venda> = vector<Venda>()
+            const vector<Venda*> = vector<Venda*>()
         );
         // virtual ~Vendedor();
     
-        void setVendas(vector<Venda>);
-        vector<Venda> getVendas() const;
+        void setVendas(vector<Venda*>);
+        vector<Venda*> getVendas() const;
 
+        // bool cadastrarPonto(Hora, Hora);
         bool cadastrarPonto(Hora, Hora);
+        // float calcularSalario();
         float calcularSalario();
 
         // void adicionarVenda(Venda);

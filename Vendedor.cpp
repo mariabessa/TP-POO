@@ -4,16 +4,16 @@ Vendedor::Vendedor(
     const string nome, const string usuario, const string senha,
     const float salarioPorHora, const Hora& tempoTrabalhado,
     const Hora& horasPendentes, const string funcao,
-    const TipoFuncionario tipo, const vector<Venda> vendas
+    const TipoFuncionario tipo, const vector<Venda*> vendas
 ): Funcionario(
         nome, usuario, senha, salarioPorHora, tempoTrabalhado, 
         horasPendentes, funcao, tipo
     ), vendas(vendas) {}
 
-void Vendedor::setVendas(vector<Venda> vendas) {
+void Vendedor::setVendas(vector<Venda*> vendas) {
     this->vendas = vendas;
 }
-vector<Venda> Vendedor::getVendas() const {
+vector<Venda*> Vendedor::getVendas() const {
     return this->vendas;
 }
 
@@ -57,7 +57,7 @@ float Vendedor::bonificacao() {
     float valorTotal = 0.0;
 
     for (auto i = this->vendas.begin(); i != this->vendas.end(); ++i)
-        valorTotal += (*i).getValor() * 0.1;
+        valorTotal += (*i)->getValor() * 0.1;
     
     return valorTotal;
 }
