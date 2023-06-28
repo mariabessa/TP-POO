@@ -14,7 +14,7 @@ class Supervisor : public Funcionario {
     private:
         vector<Vendedor*> vendedores;
         
-        float bonificacao();
+        float bonificacao() override;
     public:
         Supervisor(
             const string = "", const string = "", const string = "",
@@ -24,8 +24,11 @@ class Supervisor : public Funcionario {
         );
         // virtual ~Supervisor();
         
-        bool cadastrarPonto(Hora, Hora);
-        float calcularSalario();
+        void setVendedor(vector<Vendedor*>);
+        vector<Vendedor*> getVendedor() const;
+
+        bool cadastrarPonto(Hora, Hora) override;
+        float calcularSalario() override;
 
         // void adicionarVendedor(Vendedor);
         // void listarVendedores();

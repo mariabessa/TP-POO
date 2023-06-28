@@ -49,7 +49,7 @@ class Funcionario : public Pessoa {
         // Pega o horario de inicio e de fim do funcionário
         // Calcula o tempo trabalhado
         // Se o funcionario trabalhar mais que 10 horas em um dia, o sistema invalida
-        virtual void cadastrarPonto() = 0;
+        virtual bool cadastrarPonto(Hora, Hora) = 0;
         virtual float calcularSalario() = 0;
         virtual float bonificacao() = 0;    // Funcao que aumenta salario do funcionario
         // void ImprimeSalario();

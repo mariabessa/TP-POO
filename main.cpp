@@ -1,12 +1,16 @@
 #include "Chefe.h"
 #include "Funcionario.h"
 #include "Supervisor.h"
+#include "Vendedor.h"
+#include "Venda.h"
+#include "Hora.h"
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-void cadastrarFuncionario(Chefe* chefe) {
+void cadastrarFuncionario(Chefe* chefe, vector<Funcionario*> funcionarios) {
     string nome, usuario, senha, funcao;
     float salarioPorHora;
     int tipoFuncionario = -1;
@@ -37,11 +41,12 @@ void cadastrarFuncionario(Chefe* chefe) {
     } while(tipoFuncionario != 0 || tipoFuncionario != 1);
 
     chefe->adicionarFuncionario(funcionario);
+    funcionarios.push_back(funcionario);
 
     delete funcionario;
 }
 
-void telaChefe(Chefe *chefe) {
+void telaChefe(Chefe *chefe, vector<Funcionario*> funcionarios) {
     int opcao;
 
     do {
@@ -59,7 +64,7 @@ void telaChefe(Chefe *chefe) {
             case 0:
                 // Funcionario funcionario = new Funcionario(...dados)
                 // funcionarios.lista(add funcionario)
-                cadastrarFuncionario(chefe);
+                cadastrarFuncionario(chefe, funcionarios);
                 break;
             
             case 1:
@@ -98,7 +103,7 @@ void telaChefe(Chefe *chefe) {
 void cadastrarPonto(Funcionario *funcionario) {
     Hora *pontoInicio, *pontoFim;
     int horasPontoInicio, minutosPontoInicio, horasPontoFim, minutosPontoFim;
-
+    
     cout << "Informe as Horas do inicio do ponto: ";
     cin >> horasPontoInicio;
     cout << endl << "Informe os Minutos do inicio do ponto: ";
@@ -111,11 +116,20 @@ void cadastrarPonto(Funcionario *funcionario) {
     pontoInicio = new Hora(horasPontoInicio, minutosPontoInicio);
     pontoFim = new Hora(horasPontoFim, minutosPontoFim);
 
-    funcionario->cadastrarPonto(pontoInicio, pontoFim);
+    funcionario->cadastrarPonto(*pontoInicio, *pontoFim);
+}
+
+void listarVendas(Vendedor *vendedor) {
+    cout << "Nome do vendedor: " << vendedor->getNome() << endl;
+    
+    for(auto venda:vendedor->getVendas())
+        cout << "Valor Venda: " << venda->getValor() << endl;
 }
 
 void telaFuncionario(Funcionario *funcionario) {
     int opcao;
+    Vendedor* vendedor = dynamic_cast<Vendedor*>(funcionario);
+    Supervisor* supervisor = dynamic_cast<Supervisor*>(funcionario);
 
     do {
         cout << "------------------Tela Funcionário------------------" << endl;
@@ -142,7 +156,7 @@ void telaFuncionario(Funcionario *funcionario) {
                 cout << "Salário" << funcionario->calculoSalarioPorHoras(funcionario->getTipo()) << endl;
                 break;
             
-            case 2:
+            case 2: {
                 if(funcionario->getTipo() == TipoFuncionario::Supervisor) {
                     cout << "Apenas Vendedores podem realizar vendas" << endl;  // Trocar por um alerta ou um warning
                     break;
@@ -155,20 +169,26 @@ void telaFuncionario(Funcionario *funcionario) {
                 cin >> valorVenda;
 
                 venda->setValor(valorVenda);
-                
-                funcionario.adicionarVenda(venda);
+
+                // funcionario.adicionarVenda(venda);
+                vendedor->adicionarVenda(venda);
 
                 delete venda;
 
                 break;
-            
+            }
+
             case 3:
+                if(funcionario->getTipo() == TipoFuncionario::Supervisor) {
+                    for(auto vendedor:supervisor->getVendedor())            
+                        listarVendas(vendedor);
+                    break;
+                }
                 // if(funcionario.isSupervisor)
                     // supervisor.funcionarios.map((funcionario) => return funcionario.vendas)
                 // else
                     // funcionario.vendas
-                for(auto venda:funcionario.getVendas())
-                    cout << "Valor Venda: " << venda->getValor() << endl;
+                listarVendas(vendedor);
 
                 break;
             
@@ -182,12 +202,11 @@ void telaFuncionario(Funcionario *funcionario) {
     } while(opcao != 4);
 }
 
-bool login(int tipoLogin, string usuario, string senha) {
+bool login(Chefe *chefe, vector<Funcionario*> funcionarios, int tipoLogin, string usuario, string senha) {
     bool achou = false;
     
     // Procura se o usuario e senha existem na lista de Chefes
     if(tipoLogin == 0) {
-        Chefe *chefe = new Chefe();
         // Uma maneira de procurar todos os chefes
         // E examinar usuario e senha de cada chefe
         achou = chefe->logar(usuario, senha);
@@ -199,7 +218,7 @@ bool login(int tipoLogin, string usuario, string senha) {
         // Se achar um chefe q os dados batem c os q foram passados, vamos para a tela do chefe
         if(achou)
             // Tela Chefe
-            telaChefe(chefe);
+            telaChefe(chefe, funcionarios);
     }
     else {
         // Uma maneira de procurar todos os funcionarios
@@ -219,10 +238,10 @@ bool login(int tipoLogin, string usuario, string senha) {
     return achou;
 }
 
-bool realizarLogin(int tipoLogin, string usuario, string senha) {
+bool realizarLogin(Chefe *chefe, vector<Funcionario*> funcionarios, int tipoLogin, string usuario, string senha) {
     // Se conseguir fazer login
     
-    if(login(tipoLogin, usuario, senha)) return true;
+    if(login(chefe, funcionarios,tipoLogin, usuario, senha)) return true;
     // if(true) return true;
     
     // Se n conseguir fazer login vai exibir mensagem de erro e retornara para a Tela de Login
@@ -231,7 +250,7 @@ bool realizarLogin(int tipoLogin, string usuario, string senha) {
     return false;
 }
 
-void telaLogin() {
+void telaLogin(Chefe *chefe, vector<Funcionario*> funcionarios) {
     int tipoLogin;
     string usuario, senha;
     
@@ -253,7 +272,7 @@ void telaLogin() {
                 cin >> senha;
 
                 // Se n conseguir fazer login retorna para o menu de login
-                if(!realizarLogin(tipoLogin, usuario, senha))
+                if(!realizarLogin(chefe, funcionarios,tipoLogin, usuario, senha))
                     return;
                 break;
             
@@ -267,7 +286,7 @@ void telaLogin() {
     } while(tipoLogin != 2);
 }
 
-void telaInicial() {
+void telaInicial(Chefe *chefe, vector<Funcionario*> funcionarios) {
     int opcao;
 
     do {
@@ -280,7 +299,7 @@ void telaInicial() {
 
         switch (opcao) {
             case 0:
-                telaLogin();
+                telaLogin(chefe, funcionarios);
                 break;
             
             case 1:
@@ -293,11 +312,49 @@ void telaInicial() {
     } while(opcao != 1);
 }
 
-int main() {
+Chefe* iniciarChefe() {
+    string nome, usuario, senha;
+    int opcao;
+
+    Chefe* chefe;
+
+    cout << "Cadastre o Chefe:" << endl;
+    cout << "Informe seu:" << endl;
+    cout << "Nome: ";
+    cin >> nome;
     
-    telaInicial();
+    cout << "Quer adicionar Usuario e Senha?" << endl;
+    cout << "   0- Não (se mantem como padrão Usuario = 'admin' e Senha = 'admin')" << endl;
+    cout << "   1- Sim" << endl;
+    cin >> opcao;
+
+    if(opcao == 0) chefe = new Chefe(nome);
+    else {
+        cout << endl << "Usuário: ";
+        cin >> usuario;
+        cout << endl << "Senha: ";
+        cin >> senha;
+
+        chefe = new Chefe(nome, usuario, senha);
+    }
+    
+    fflush(stdin);
+    cout << "Chefe criado com sucesso" << endl << endl;
+
+    return chefe;
+}
+
+int main() {
+    Chefe* chefe;
+    vector<Funcionario*> funcionarios;
+
+    chefe = iniciarChefe();
+
+    telaInicial(chefe, funcionarios);
     
     cout << "Finalizando o programa.\n" << endl;
-    
+    delete chefe, funcionarios;
+
     return 0;
 }
+

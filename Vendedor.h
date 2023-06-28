@@ -15,8 +15,8 @@ class Vendedor : public Funcionario {
     private:
         vector<Venda*> vendas;
         
-        float bonificacao();
-        // float bonificacao() override {}
+        // float bonificacao();
+        float bonificacao() override;
     public:
         Vendedor(
             const string = "", const string = "", const string = "",
@@ -29,8 +29,10 @@ class Vendedor : public Funcionario {
         void setVendas(vector<Venda*>);
         vector<Venda*> getVendas() const;
 
-        bool cadastrarPonto(Hora, Hora);
-        float calcularSalario();
+        // bool cadastrarPonto(Hora, Hora);
+        // float calcularSalario();
+        bool cadastrarPonto(Hora, Hora) override;
+        float calcularSalario() override;
 
         void adicionarVenda(Venda*);
         // void listarVendas();

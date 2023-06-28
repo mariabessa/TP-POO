@@ -12,6 +12,13 @@ Supervisor::Supervisor(
     ), vendedores(vendedores) {}
 // */
 
+void Supervisor::setVendedor(vector<Vendedor*> Vendedor) {
+    this->vendedores = Vendedor;
+}
+vector<Vendedor*> Supervisor::getVendedor() const {
+    return this->vendedores;
+}
+
 bool Supervisor::cadastrarPonto(Hora inicio, Hora fim) {
     int horasTrabalhado, minutosTrabalhado;
     Hora horasPendentes = this->getHorasPendentes();
