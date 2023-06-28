@@ -17,15 +17,15 @@ class Funcionario : public Pessoa {
         Hora tempoTrabalhado;
         Hora horasPendentes;
     private:
-        std::string funcao;
+        string funcao;
         TipoFuncionario tipo;
     public:
         Funcionario(
-            const std::string = "", const std::string = "", const std::string = "",
-            const float = 0.0, const Hora, const Hora, const std::string = "",
-            const TipoFuncionario = TipoFuncionario::Vendedor
+            const string = "", const string = "", const string = "",
+            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
+            const string = "", const TipoFuncionario = TipoFuncionario::Vendedor
         );
-        virtual ~Funcionario();
+        // virtual ~Funcionario();
 
         // Getters e Setters
 
@@ -38,17 +38,20 @@ class Funcionario : public Pessoa {
         void setHorasPendentes(Hora);
         Hora getHorasPendentes() const;
 
-        void setFuncao(std::string);
-        const std::string &getFuncao() const;
+        void setFuncao(string);
+        const string &getFuncao() const;
         
         void setTipo(TipoFuncionario);
         TipoFuncionario getTipo() const;
 
         // Funções
 
-        void cadastrarPonto();
-        void calcularSalario();
-        void bonificacao();    // Funcao que aumenta salario do funcionario
+        // Pega o horario de inicio e de fim do funcionário
+        // Calcula o tempo trabalhado
+        // Se o funcionario trabalhar mais que 10 horas em um dia, o sistema invalida
+        virtual void cadastrarPonto() = 0;
+        virtual float calcularSalario() = 0;
+        virtual float bonificacao() = 0;    // Funcao que aumenta salario do funcionario
         // void ImprimeSalario();
 
     // private:

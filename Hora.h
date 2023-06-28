@@ -13,7 +13,7 @@ class Hora {
         int minutos;
     public:
         Hora(const int = 0, const int = 0);
-        virtual ~Hora();
+        // virtual ~Hora();
 
         void setHoras(int);
         int getHoras() const;

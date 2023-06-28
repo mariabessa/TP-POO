@@ -1,7 +1,7 @@
 #include "Chefe.h"
 
 Chefe::Chefe(
-    const std::string nome, const std::string usuario, const std::string senha,
+    const string nome, const string usuario, const string senha,
     const vector<Funcionario> funcionarios
 ):  Pessoa(nome, usuario, senha), funcionarios(funcionarios) {}
 
@@ -21,16 +21,16 @@ void Chefe::listarFuncionarios() {
         cout << (*i).getNome() << endl;
 }
 
-bool Chefe::logar(std::string usuario, std::string senha) {
+bool Chefe::logar(string usuario, string senha) {
     return (this->getUsuario() == usuario && this->getSenha() == senha);
 }
 
 /*
-bool Chefe :: logar(std::string user, std::string s){
+bool Chefe :: logar(string user, string s){
     return (usuario == user && senha == s);
 }
 
-void Chefe :: cadastrarFuncionario(std::string nome, std::string cargo, double salario, std::string user, std::string s){
+void Chefe :: cadastrarFuncionario(string nome, string cargo, double salario, string user, string s){
     if(cargo == "Vendedor"){
         // a class chefe deveria ser friend da Vendedor?
         Vendedor* vendedor = new Vendedor(nome, salario);

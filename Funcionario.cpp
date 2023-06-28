@@ -1,9 +1,9 @@
 #include "Funcionario.h"
 
 Funcionario::Funcionario(
-    const std::string nome, const std::string usuario, const std::string senha,
-    const float salarioPorHora, const Hora tempoTrabalhado,
-    const Hora horasPendentes, const std::string funcao, const TipoFuncionario tipo
+    const string nome, const string usuario, const string senha,
+    const float salarioPorHora, const Hora& tempoTrabalhado,
+    const Hora& horasPendentes, const string funcao, const TipoFuncionario tipo
 ):  Pessoa(nome, usuario, senha), salarioPorHora(salarioPorHora),
     tempoTrabalhado(tempoTrabalhado), horasPendentes(horasPendentes), funcao(funcao),
     tipo(tipo) {}
@@ -29,10 +29,10 @@ Hora Funcionario::getHorasPendentes() const {
     return horasPendentes;
 }
 
-void Funcionario::setFuncao(std::string funcao) {
+void Funcionario::setFuncao(string funcao) {
     this->funcao = funcao;
 }
-const std::string &Funcionario::getFuncao() const {
+const string &Funcionario::getFuncao() const {
     return funcao;
 }
 
@@ -42,15 +42,6 @@ void Funcionario::setTipo(TipoFuncionario tipo) {
 TipoFuncionario Funcionario::getTipo() const {
     return tipo;
 }
-
-// Pega o horario de inicio e de fim do funcionário
-// Calcula o tempo trabalhado
-// Se o funcionario trabalhar mais que 10 horas em um dia, o sistema invalida
-void Funcionario::cadastrarPonto() {}
-
-void Funcionario::calcularSalario() {}
-
-void Funcionario::bonificacao() {}
 
 bool Ponto(Hora inicio, Hora fim, Hora *horasPendentes, int *horasTrabalhado, int *minutosTrabalhado) {
     *horasTrabalhado = fim.getHoras() - inicio.getHoras();

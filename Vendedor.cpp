@@ -1,9 +1,9 @@
 #include "Vendedor.h"
 
 Vendedor::Vendedor(
-    const std::string nome, const std::string usuario, const std::string senha,
-    const float salarioPorHora, const Hora tempoTrabalhado,
-    const Hora horasPendentes, const std::string funcao,
+    const string nome, const string usuario, const string senha,
+    const float salarioPorHora, const Hora& tempoTrabalhado,
+    const Hora& horasPendentes, const string funcao,
     const TipoFuncionario tipo, const vector<Venda> vendas
 ): Funcionario(
         nome, usuario, senha, salarioPorHora, tempoTrabalhado, 
@@ -50,7 +50,7 @@ bool Vendedor::cadastrarPonto(Hora inicio, Hora fim) {
 }
 
 float Vendedor::calcularSalario() {
-    float salario = calculoSalarioPorHoras(this->getTipo()) + bonificacao();
+    return calculoSalarioPorHoras(this->getTipo()) + bonificacao();
 }
 
 float Vendedor::bonificacao() {

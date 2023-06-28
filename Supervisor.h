@@ -17,12 +17,12 @@ class Supervisor : public Funcionario {
         float bonificacao();
     public:
         Supervisor(
-            const std::string nome, const std::string usuario, const std::string senha,
-            const float salarioPorHora, const Hora tempoTrabalhado,
-            const Hora horasPendentes, const std::string funcao,
-            const TipoFuncionario tipo, const vector<Vendedor>
+            const string = "", const string = "", const string = "",
+            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
+            const string = "", const TipoFuncionario = TipoFuncionario::Vendedor,
+            const vector<Vendedor> = vector<Vendedor>()
         );
-        virtual ~Supervisor();
+        // virtual ~Supervisor();
         
         bool cadastrarPonto(Hora, Hora);
         float calcularSalario();

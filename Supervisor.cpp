@@ -2,9 +2,9 @@
 
 // /*
 Supervisor::Supervisor(
-    const std::string nome, const std::string usuario, const std::string senha,
-    const float salarioPorHora, const Hora tempoTrabalhado,
-    const Hora horasPendentes, const std::string funcao, const TipoFuncionario tipo,
+    const string nome, const string usuario, const string senha,
+    const float salarioPorHora, const Hora& tempoTrabalhado,
+    const Hora& horasPendentes, const string funcao, const TipoFuncionario tipo,
     const vector<Vendedor> vendedores
 ): Funcionario(
         nome, usuario, senha, salarioPorHora, tempoTrabalhado, 
@@ -45,7 +45,7 @@ bool Supervisor::cadastrarPonto(Hora inicio, Hora fim) {
 }
 
 float Supervisor::calcularSalario() {
-    float salario = calculoSalarioPorHoras(this->getTipo()) + bonificacao();
+    return calculoSalarioPorHoras(this->getTipo()) + bonificacao();
 }
 
 float Supervisor::bonificacao() {

@@ -18,12 +18,12 @@ class Vendedor : public Funcionario {
         float bonificacao();
     public:
         Vendedor(
-            const std::string = "", const std::string = "", const std::string = "",
-            const float = 0.0, const Hora, const Hora,
-            const std::string = "", const TipoFuncionario, 
-            const vector<Venda>
+            const string = "", const string = "", const string = "",
+            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
+            const string = "", const TipoFuncionario = TipoFuncionario::Vendedor, 
+            const vector<Venda> = vector<Venda>()
         );
-        virtual ~Vendedor();
+        // virtual ~Vendedor();
     
         void setVendas(vector<Venda>);
         vector<Venda> getVendas() const;
