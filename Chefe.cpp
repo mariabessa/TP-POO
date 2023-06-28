@@ -23,9 +23,9 @@ void Chefe::listarFuncionarios() {
         cout << (*i)->getNome() << endl;
 }
 
-bool Chefe::logar(string usuario, string senha) {
-    return (this->getUsuario() == usuario && this->getSenha() == senha);
-}
+// bool Chefe::logar(string usuario, string senha) {
+//     return (this->getUsuario() == usuario && this->getSenha() == senha);
+// }
 
 /*
 bool Chefe :: logar(string user, string s){

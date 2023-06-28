@@ -20,8 +20,8 @@ class Vendedor : public Funcionario {
     public:
         Vendedor(
             const string = "", const string = "", const string = "",
-            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
-            const string = "", const TipoFuncionario = TipoFuncionario::Vendedor, 
+            const string = "", const TipoFuncionario = TipoFuncionario::Vendedor,
+            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(), 
             const vector<Venda*> = vector<Venda*>()
         );
         // virtual ~Vendedor();
@@ -29,12 +29,10 @@ class Vendedor : public Funcionario {
         void setVendas(vector<Venda*>);
         vector<Venda*> getVendas() const;
 
-        // bool cadastrarPonto(Hora, Hora);
         bool cadastrarPonto(Hora, Hora);
-        // float calcularSalario();
         float calcularSalario();
 
-        // void adicionarVenda(Venda);
+        void adicionarVenda(Venda*);
         // void listarVendas();
 };
 

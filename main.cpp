@@ -6,7 +6,42 @@
 
 using namespace std;
 
-void telaChefe() {
+void cadastrarFuncionario(Chefe* chefe) {
+    string nome, usuario, senha, funcao;
+    float salarioPorHora;
+    int tipoFuncionario = -1;
+
+    Funcionario *funcionario;
+    
+    cout << "Informe os dados do Funcionario" << endl;
+    cout << "Nome: ";
+    cin >> nome;
+    cout << endl << "Usuario: ";
+    cin >> usuario;
+    cout << endl << "Senha: ";
+    cin >> senha;
+    cout << endl << "Salário por hora: ";
+    cin >> salarioPorHora;
+    cout << endl << "Função: ";
+    cin >> funcao;
+    do {
+        cout << endl << "Tipo: " << endl << "   0- Vendedor" << endl << "   1- Supervisor";
+        cin >> tipoFuncionario;
+
+        if(tipoFuncionario == 0)
+            funcionario = new Vendedor(nome, usuario, senha, funcao, TipoFuncionario::Vendedor, salarioPorHora);
+        else if(tipoFuncionario == 1)
+            funcionario = new Supervisor(nome, usuario, senha, funcao, TipoFuncionario::Supervisor, salarioPorHora);
+        else
+            cout << "Informe um tipo válido" << endl;
+    } while(tipoFuncionario != 0 || tipoFuncionario != 1);
+
+    chefe->adicionarFuncionario(funcionario);
+
+    delete funcionario;
+}
+
+void telaChefe(Chefe *chefe) {
     int opcao;
 
     do {
@@ -24,22 +59,30 @@ void telaChefe() {
             case 0:
                 // Funcionario funcionario = new Funcionario(...dados)
                 // funcionarios.lista(add funcionario)
+                cadastrarFuncionario(chefe);
                 break;
             
             case 1:
                 // funcionarios.map((funcionario) => return funcionario.dados)
+                chefe->listarFuncionarios();
                 break;
             
             case 2:
-                // Ler nome do funcionario
-                // funcionario = funcionarios.search(nomeFuncionario)
-                // print funcionario.horas.dados
+                // Passa por todos os funcionarios e informa os seus dados(Nome, Função, Tempo Trabalhado)
+                for(auto funcionario:chefe->getFuncionarios()) {
+                    cout << "Nome: " << funcionario->getNome() << endl;
+                    cout << "Função: " << funcionario->getFuncao() << endl;
+                    cout << "Tempo Trabalhado: " << funcionario->calculoSalarioPorHoras(funcionario->getTipo())/funcionario->getSalarioPorHora() << " horas" << endl;
+                }
                 break;
             
             case 3:
-                // Ler nome do funcionario
-                // funcionario = funcionarios.search(nomeFuncionario)
-                // realizar calculo do salário de funcionario com base em funcionario.horas.dados
+                // Passa por todos os funcionarios e informa os seus dados(Nome, Função, Salário)
+                for(auto funcionario:chefe->getFuncionarios()) {
+                    cout << "Nome: " << funcionario->getNome() << endl;
+                    cout << "Função: " << funcionario->getFuncao() << endl;
+                    cout << "Salário: " << funcionario->calculoSalarioPorHoras(funcionario->getTipo()) << " horas" << endl;
+                }
                 break;
             
             case 4:
@@ -52,7 +95,26 @@ void telaChefe() {
     } while(opcao != 4);
 }
 
-void telaFuncionario() {
+void cadastrarPonto(Funcionario *funcionario) {
+    Hora *pontoInicio, *pontoFim;
+    int horasPontoInicio, minutosPontoInicio, horasPontoFim, minutosPontoFim;
+
+    cout << "Informe as Horas do inicio do ponto: ";
+    cin >> horasPontoInicio;
+    cout << endl << "Informe os Minutos do inicio do ponto: ";
+    cin >> minutosPontoInicio;
+    cout << endl << "Informe as Horas do fim do ponto: ";
+    cin >> horasPontoFim;
+    cout << endl << "Informe os Minutos do fim do ponto: ";
+    cin >> minutosPontoFim;
+
+    pontoInicio = new Hora(horasPontoInicio, minutosPontoInicio);
+    pontoFim = new Hora(horasPontoFim, minutosPontoFim);
+
+    funcionario->cadastrarPonto(pontoInicio, pontoFim);
+}
+
+void telaFuncionario(Funcionario *funcionario) {
     int opcao;
 
     do {
@@ -71,16 +133,33 @@ void telaFuncionario() {
                 // int horarioChegada, horarioSaida
                 // int horasTrabalhada = horarioSaida - horarioChegada
                 // funcionario.setPonto(horasTrabalhada)
+                cadastrarPonto(funcionario);
                 break;
             
             case 1:
                 // int salario = calcSalario(funcionario.dados)
                 // print salario
+                cout << "Salário" << funcionario->calculoSalarioPorHoras(funcionario->getTipo()) << endl;
                 break;
             
             case 2:
-                // int valorVenda // <= adicionar o valor da venda
-                // funcionario.addVenda(valorVenda)
+                if(funcionario->getTipo() == TipoFuncionario::Supervisor) {
+                    cout << "Apenas Vendedores podem realizar vendas" << endl;  // Trocar por um alerta ou um warning
+                    break;
+                }
+
+                int valorVenda; // <= adicionar o valor da venda
+                Venda* venda = new Venda();
+
+                cout << "Informe o Valor da Venda: ";
+                cin >> valorVenda;
+
+                venda->setValor(valorVenda);
+                
+                funcionario.adicionarVenda(venda);
+
+                delete venda;
+
                 break;
             
             case 3:
@@ -88,6 +167,9 @@ void telaFuncionario() {
                     // supervisor.funcionarios.map((funcionario) => return funcionario.vendas)
                 // else
                     // funcionario.vendas
+                for(auto venda:funcionario.getVendas())
+                    cout << "Valor Venda: " << venda->getValor() << endl;
+
                 break;
             
             case 4:
@@ -108,31 +190,27 @@ bool login(int tipoLogin, string usuario, string senha) {
         Chefe *chefe = new Chefe();
         // Uma maneira de procurar todos os chefes
         // E examinar usuario e senha de cada chefe
-        if(chefe->logar(usuario, senha))
+        achou = chefe->logar(usuario, senha);
+        if(achou)
             cout << "Logou." << endl;
         else
             cout << "Não logou." << endl;
 
-        // for(quant de chefes)
-            // if (chefe->getUsuario == usuario && chefe->getSenha == senha)
-                // achou = true
-
         // Se achar um chefe q os dados batem c os q foram passados, vamos para a tela do chefe
-        // if(achou)
+        if(achou)
             // Tela Chefe
+            telaChefe(chefe);
     }
-    // Procura se o usuario e senha existem na lista de Funcionarios
     else {
         // Uma maneira de procurar todos os funcionarios
         // E examinar usuario e senha de cada funcionario
-
-        // for(quant de Funcionarios)
-            // if (funcionario->getUsuario == usuario && funcionario->getSenha == senha)
-                // achou = true
-        
-        // Se achar um chefe q os dados batem c os q foram passados, vamos para a tela do funcionario
-        // if(achou)
-            // Tela Funcionario
+        for(auto funcionario:funcionarios)
+            if(funcionario->logar(usuario, senha)) {
+                achou = true;
+                telaFuncionario(funcionario);
+            }
+                
+        // Se achar um funcionario q os dados batem c os q foram passados, vamos para a tela do funcionario
     }
 
     // Se o Chefe/Funcionario conseguiram acessar sua tela, sera retornado True e voltaremos para o Menu Inicial

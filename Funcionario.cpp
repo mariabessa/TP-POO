@@ -2,11 +2,11 @@
 
 Funcionario::Funcionario(
     const string nome, const string usuario, const string senha,
-    const float salarioPorHora, const Hora& tempoTrabalhado,
-    const Hora& horasPendentes, const string funcao, const TipoFuncionario tipo
+    const string funcao, const TipoFuncionario tipo, const float salarioPorHora,
+    const Hora& tempoTrabalhado, const Hora& horasPendentes
 ):  Pessoa(nome, usuario, senha), salarioPorHora(salarioPorHora),
-    tempoTrabalhado(tempoTrabalhado), horasPendentes(horasPendentes), funcao(funcao),
-    tipo(tipo) {}
+    funcao(funcao), tipo(tipo), tempoTrabalhado(tempoTrabalhado),
+    horasPendentes(horasPendentes) {}
 
 void Funcionario::setSalarioPorHora(float salarioPorHora) {
     this->salarioPorHora = salarioPorHora;

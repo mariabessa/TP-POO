@@ -23,6 +23,8 @@ class Pessoa {
 
         void setSenha(string);
         const string &getSenha() const;
+
+        bool logar(string, string);
 };
 
 #endif

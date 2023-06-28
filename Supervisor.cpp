@@ -3,12 +3,12 @@
 // /*
 Supervisor::Supervisor(
     const string nome, const string usuario, const string senha,
-    const float salarioPorHora, const Hora& tempoTrabalhado,
-    const Hora& horasPendentes, const string funcao, const TipoFuncionario tipo,
+    const string funcao, const TipoFuncionario tipo, const float salarioPorHora,
+    const Hora& tempoTrabalhado, const Hora& horasPendentes,
     const vector<Vendedor*> vendedores
 ): Funcionario(
-        nome, usuario, senha, salarioPorHora, tempoTrabalhado, 
-        horasPendentes, funcao, tipo
+        nome, usuario, senha, funcao, tipo, salarioPorHora, tempoTrabalhado, 
+        horasPendentes
     ), vendedores(vendedores) {}
 // */
 

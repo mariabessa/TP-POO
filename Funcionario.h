@@ -12,18 +12,18 @@ using namespace std;
 enum class TipoFuncionario { Vendedor, Supervisor };
 
 class Funcionario : public Pessoa {
+    private:
+        string funcao;
+        TipoFuncionario tipo;
     protected:    
         float salarioPorHora;
         Hora tempoTrabalhado;
         Hora horasPendentes;
-    private:
-        string funcao;
-        TipoFuncionario tipo;
     public:
         Funcionario(
             const string = "", const string = "", const string = "",
-            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
-            const string = "", const TipoFuncionario = TipoFuncionario::Vendedor
+            const string = "", const TipoFuncionario = TipoFuncionario::Vendedor,
+            const float = 0.0, const Hora& = Hora(), const Hora& = Hora()
         );
         // virtual ~Funcionario();
 

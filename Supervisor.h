@@ -18,8 +18,8 @@ class Supervisor : public Funcionario {
     public:
         Supervisor(
             const string = "", const string = "", const string = "",
-            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
             const string = "", const TipoFuncionario = TipoFuncionario::Vendedor,
+            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
             const vector<Vendedor*> = vector<Vendedor*>()
         );
         // virtual ~Supervisor();

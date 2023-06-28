@@ -2,12 +2,11 @@
 
 Vendedor::Vendedor(
     const string nome, const string usuario, const string senha,
-    const float salarioPorHora, const Hora& tempoTrabalhado,
-    const Hora& horasPendentes, const string funcao,
-    const TipoFuncionario tipo, const vector<Venda*> vendas
+    const string funcao, const TipoFuncionario tipo, const float salarioPorHora,
+    const Hora& tempoTrabalhado, const Hora& horasPendentes, const vector<Venda*> vendas
 ): Funcionario(
-        nome, usuario, senha, salarioPorHora, tempoTrabalhado, 
-        horasPendentes, funcao, tipo
+        nome, usuario, senha, funcao, tipo, salarioPorHora, tempoTrabalhado, 
+        horasPendentes
     ), vendas(vendas) {}
 
 void Vendedor::setVendas(vector<Venda*> vendas) {
@@ -62,13 +61,13 @@ float Vendedor::bonificacao() {
     return valorTotal;
 }
 
-/*
-void Vendedor::adicionarVenda(Venda venda) {
+void Vendedor::adicionarVenda(Venda* venda) {
     this->vendas.push_back(venda);
 }
 
+/*
 void Vendedor::listarVendas() {
     for (auto i = this->vendas.begin(); i != this->vendas.end(); ++i)
-        cout << (*i).getValor() << endl;
+        cout << (*i)->getValor() << endl;
 }
 */

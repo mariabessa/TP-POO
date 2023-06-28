@@ -24,3 +24,7 @@ void Pessoa::setSenha(string senha) {
 const string &Pessoa::getSenha() const {
     return senha;
 }
+
+bool Pessoa::logar(string usuario, string senha) {
+    return (this->getUsuario() == usuario && this->getSenha() == senha);
+}

@@ -25,7 +25,7 @@ class Chefe : public Pessoa {
 
         void adicionarFuncionario(Funcionario*);
         void listarFuncionarios();
-        bool logar(string, string);
+        // bool logar(string, string);
         // void cadastrarFuncionario(string, string, double, string, string);
         //funcao de listar funcionarios
         //funcao de checar ponto
