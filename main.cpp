@@ -8,15 +8,33 @@
 #include <vector>
 #include <stdexcept>
 
-
 using namespace std;
 
-void cadastrarFuncionario(Chefe* chefe, vector<Funcionario*> funcionarios) {
-    string nome, usuario, senha, funcao;
-    float salarioPorHora;
+void teste(vector<Funcionario*> *funcionarios) {
+    Funcionario *t1 = new Vendedor("Gabs", "gabs", "senha");
+    Funcionario *t2 = new Supervisor("Andre", "andre", "senha");
+    Funcionario *t3 = new Vendedor("Bessa", "bessa", "senha");
+    
+    funcionarios->push_back(t1);
+    funcionarios->push_back(t2);
+    funcionarios->push_back(t3);
+}
+
+void teste2(vector<Funcionario*> *funcionarios) {
+    for(auto funcionario:(*funcionarios)) {
+        cout << "Nome: " << funcionario->getNome() << endl;
+        cout << "Função: " << funcionario->getFuncao() << endl;
+    }   
+}
+
+// /*
+// void cadastrarFuncionario(Chefe* chefe, vector<Funcionario*> *funcionarios) {
+void cadastrarFuncionario(vector<Funcionario*> *funcionarios) {
+    string nome = "", usuario = "", senha = "", funcao = "";
+    float salarioPorHora = 0;
     int tipoFuncionario = -1;
 
-    Funcionario *funcionario;
+    Funcionario *funcionario = new Vendedor();
     
     cout << "Informe os dados do Funcionario" << endl;
     cout << "Nome: ";
@@ -29,11 +47,10 @@ void cadastrarFuncionario(Chefe* chefe, vector<Funcionario*> funcionarios) {
     cout << endl << "Salário por hora: ";
     cin >> salarioPorHora;
     cout << endl << "Função: ";
-    getline (cin, funcao);
+    getline (cin, funcao);  // N ta pegando aqui
     do {
         cout << endl << "Tipo: " << endl << "   0- Vendedor" << endl << "   1- Supervisor" << endl;
         cin >> tipoFuncionario;
-        cout << "tipo: " << tipoFuncionario;
         if(tipoFuncionario == 0)
             funcionario = new Vendedor(nome, usuario, senha, funcao, TipoFuncionario::Vendedor, salarioPorHora);
         else if(tipoFuncionario == 1)
@@ -42,12 +59,14 @@ void cadastrarFuncionario(Chefe* chefe, vector<Funcionario*> funcionarios) {
             cout << "Informe um t&&o válido" << endl;
     } while(tipoFuncionario != 0 && tipoFuncionario != 1);
 
-    chefe->adicionarFuncionario(funcionario);
-    funcionarios.push_back(funcionario);
-    delete funcionario;
+    // chefe->adicionarFuncionario(funcionario);
+    
+    funcionarios->push_back(funcionario);
+
+    // delete funcionario;
 }
 
-void telaChefe(Chefe *chefe, vector<Funcionario*> funcionarios) {
+void telaChefe(Chefe *chefe, vector<Funcionario*> *funcionarios) {
     string opcaoStr;
     int opcao = -1;
     bool verifica;
@@ -59,7 +78,7 @@ void telaChefe(Chefe *chefe, vector<Funcionario*> funcionarios) {
             cout << "    1- Listar funcionários cadastrados" << endl;
             cout << "    2- Checar ponto" << endl;
             cout << "    3- Calcular salário" << endl;
-            cout << "    4- Voltar para o Menu Inicial" << endl;
+            cout << "    4- Voltar" << endl;
 
             cout << "Informe a opção que deseja execultar:" << endl;
             cin >> opcaoStr;
@@ -73,13 +92,25 @@ void telaChefe(Chefe *chefe, vector<Funcionario*> funcionarios) {
             switch (opcao) {
                 case 0:
                     // Funcionario funcionario = new Funcionario(...dados)
-                    // funcionarios.lista(add funcionario)
-                    cadastrarFuncionario(chefe, funcionarios);
+                    // cadastrarFuncionario(chefe, funcionarios);
+                    cadastrarFuncionario(funcionarios);
+                    // teste2(funcionarios);
+                    // teste(funcionarios);
                     break;
                 
                 case 1:
                     // funcionarios.map((funcionario) => return funcionario.dados)
-                    chefe->listarFuncionarios();
+                    // chefe->listarFuncionarios();
+                    // cout << "asdfasd" << endl;
+                    // Funcionario *teste = new Funcionario((*chefe).getFuncionarios().begin());
+                    // cout << teste->getNome() << endl;
+                    
+                    // for(auto funcionario:(*chefe).getFuncionarios()) {
+                    for(auto funcionario:(*funcionarios)) {
+                        cout << "Nome: " << funcionario->getNome() << endl;
+                        cout << "Função: " << funcionario->getFuncao() << endl;
+                    }
+                    // teste2(funcionarios);
                     break;
                 
                 case 2:
@@ -173,7 +204,7 @@ void telaFuncionario(Funcionario *funcionario) {
                     break;
                 }
 
-                int valorVenda; // <= adicionar o valor da venda
+                float valorVenda; // <= adicionar o valor da venda
                 Venda* venda = new Venda();
 
                 cout << "Informe o Valor da Venda: ";
@@ -213,7 +244,7 @@ void telaFuncionario(Funcionario *funcionario) {
     } while(opcao != 4);
 }
 
-bool login(Chefe *chefe, vector<Funcionario*> funcionarios, int tipoLogin, string usuario, string senha) {
+bool login(Chefe *chefe, vector<Funcionario*> *funcionarios, int tipoLogin, string usuario, string senha) {
     bool achou = false;
     
     // Procura se o usuario e senha existem na lista de Chefes
@@ -234,7 +265,7 @@ bool login(Chefe *chefe, vector<Funcionario*> funcionarios, int tipoLogin, strin
     else {
         // Uma maneira de procurar todos os funcionarios
         // E examinar usuario e senha de cada funcionario
-        for(auto funcionario:funcionarios)
+        for(auto funcionario:(*funcionarios))
             if(funcionario->logar(usuario, senha)) {
                 achou = true;
                 telaFuncionario(funcionario);
@@ -249,7 +280,7 @@ bool login(Chefe *chefe, vector<Funcionario*> funcionarios, int tipoLogin, strin
     return achou;
 }
 
-bool realizarLogin(Chefe *chefe, vector<Funcionario*> funcionarios, int tipoLogin, string usuario, string senha) {
+bool realizarLogin(Chefe *chefe, vector<Funcionario*> *funcionarios, int tipoLogin, string usuario, string senha) {
     // Se conseguir fazer login
     
     if(login(chefe, funcionarios,tipoLogin, usuario, senha)) return true;
@@ -261,7 +292,7 @@ bool realizarLogin(Chefe *chefe, vector<Funcionario*> funcionarios, int tipoLogi
     return false;
 }
 
-void telaLogin(Chefe *chefe, vector<Funcionario*> funcionarios) {
+void telaLogin(Chefe *chefe, vector<Funcionario*> *funcionarios) {
     int tipoLogin;
     string usuario, senha;
     
@@ -297,7 +328,7 @@ void telaLogin(Chefe *chefe, vector<Funcionario*> funcionarios) {
     } while(tipoLogin != 2);
 }
 
-void telaInicial(Chefe *chefe, vector<Funcionario*> funcionarios) {
+void telaInicial(Chefe *chefe, vector<Funcionario*> *funcionarios) {
     int opcao;
 
     do {
@@ -353,18 +384,22 @@ Chefe* iniciarChefe() {
 
     return chefe;
 }
+// */
 
 int main() {
-    Chefe* chefe;
+    Chefe *chefe;
     vector<Funcionario*> funcionarios;
 
-    chefe = iniciarChefe();
+    teste(&funcionarios);
+    // teste2(&funcionarios);
 
-    telaInicial(chefe, funcionarios);
+    chefe = iniciarChefe();
+    
+    telaInicial(chefe, &funcionarios);
     
     cout << "Finalizando o programa.\n" << endl;
-    delete chefe, funcionarios;
-
+    // delete chefe, funcionarios;
+    
     return 0;
 }
 

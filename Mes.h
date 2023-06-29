@@ -1,5 +1,5 @@
-#ifndef MES
-#define MES
+#ifndef MES_H
+#define MES_H
 
 #include <iostream>
 #include <vector>
@@ -8,13 +8,15 @@
 
 using namespace std;
 
-class Dia{
+class Mes{
     private:
         vector<Dia*> mesDoAno;
 
     protected:
-        Dia(vector<Dia*> = vector<Dia*>());
+        Mes(vector<Dia*> = vector<Dia*>());
 
         void setMesDoAno(vector<Dia*>);
         vector<Dia*> getMesDoAno() const;
 };
+
+#endif

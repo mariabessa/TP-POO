@@ -1,12 +1,12 @@
-#include "Dia.h"
+#include "Mes.h"
 
-Dia::Dia(
-    const vector<Hora*> diaDoMes
-): mes(mes) {}
+Mes::Mes(
+    const vector<Dia*> mesDoAno
+): mesDoAno(mesDoAno) {}
 
-void Hora::setDiaDoMes(int diaDoMes) {
-    this->diaDoMes = diaDoMes;
+void Mes::setMesDoAno(vector<Dia*> mesDoAno) {
+    this->mesDoAno = mesDoAno;
 }
-int Hora::getDiaDoMes() const {
-    return diaDoMes;
+vector<Dia*> Mes::getMesDoAno() const {
+    return mesDoAno;
 }

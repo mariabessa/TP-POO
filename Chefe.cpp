@@ -13,9 +13,14 @@ vector<Funcionario*> Chefe::getFuncionarios() const {
     return this->funcionarios;
 }
 
+/*
 void Chefe::adicionarFuncionario(Funcionario* funcionario) {
-    cout << "entrou";
-    this->funcionarios.push_back(funcionario);
+    if (funcionario == nullptr) return;
+    
+    vector<Funcionario*> lista = this->getFuncionarios();
+    lista.push_back(funcionario);
+    // this->setFuncionarios(lista);
+    this->funcionarios = lista;
 }
 
 void Chefe::listarFuncionarios() {
@@ -24,6 +29,11 @@ void Chefe::listarFuncionarios() {
         // cout << (*i).getNome() << endl;
         cout << funcionario->getNome() << endl;
 }
+*/
+
+
+
+
 
 // bool Chefe::logar(string usuario, string senha) {
 //     return (this->getUsuario() == usuario && this->getSenha() == senha);
