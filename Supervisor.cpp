@@ -5,10 +5,10 @@ Supervisor::Supervisor(
     const string nome, const string usuario, const string senha,
     const string funcao, const TipoFuncionario tipo, const float salarioPorHora,
     const Hora& tempoTrabalhado, const Hora& horasPendentes,
-    const vector<Vendedor*> vendedores
+    const vector<Hora*> semana, const vector<Vendedor*> vendedores
 ): Funcionario(
         nome, usuario, senha, funcao, tipo, salarioPorHora, tempoTrabalhado, 
-        horasPendentes
+        horasPendentes, semana
     ), vendedores(vendedores) {}
 // */
 
@@ -19,12 +19,14 @@ vector<Vendedor*> Supervisor::getVendedor() const {
     return this->vendedores;
 }
 
-bool Supervisor::cadastrarPonto(Hora inicio, Hora fim) {
+void Supervisor::cadastrarPonto(Hora inicio, Hora fim) {
     int horasTrabalhado, minutosTrabalhado;
     Hora horasPendentes = this->getHorasPendentes();
     
-    if(!this->ponto(inicio, fim, &horasPendentes, &horasTrabalhado, &minutosTrabalhado))
-        return false;
+    if(!this->ponto(inicio, fim, &horasPendentes, &horasTrabalhado, &minutosTrabalhado)) {
+        cout << "Não é possivel registrar ponto, excedeu as horas diarias" << endl;
+        return;
+    }
 
     // Se o funcionário trabalhou menos que 8 horas no dia
     // adicionamos o tempo que ficou faltando nas horas pendentes
@@ -44,11 +46,19 @@ bool Supervisor::cadastrarPonto(Hora inicio, Hora fim) {
     // Atribuimos as horas trabalhadas removendo as horas extras
     Hora tempoTrabalhado(horasTrabalhado, minutosTrabalhado);
 
+    if(semana.size() == 7) {
+        if(!this->tempoSemana(semana)) {
+            cout << "Não é possivel registrar ponto, excedeu as horas semanais" << endl;
+            return;
+        } 
+        semana.clear();
+    }
+
     this->setTempoTrabalhado(tempoTrabalhado);
 
     cout << "Ponto cadastrado com sucesso.\n" << endl;
 
-    return true;
+    return;
 }
 
 float Supervisor::calcularSalario() {

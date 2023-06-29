@@ -3,10 +3,11 @@
 Vendedor::Vendedor(
     const string nome, const string usuario, const string senha,
     const string funcao, const TipoFuncionario tipo, const float salarioPorHora,
-    const Hora& tempoTrabalhado, const Hora& horasPendentes, const vector<Venda*> vendas
+    const Hora& tempoTrabalhado, const Hora& horasPendentes,
+    const vector<Hora*> semana, const vector<Venda*> vendas
 ): Funcionario(
         nome, usuario, senha, funcao, tipo, salarioPorHora, tempoTrabalhado, 
-        horasPendentes
+        horasPendentes, semana
     ), vendas(vendas) {}
 
 void Vendedor::setVendas(vector<Venda*> vendas) {
@@ -16,12 +17,14 @@ vector<Venda*> Vendedor::getVendas() const {
     return this->vendas;
 }
 
-bool Vendedor::cadastrarPonto(Hora inicio, Hora fim) {
+void Vendedor::cadastrarPonto(Hora inicio, Hora fim) {
     int horasTrabalhado, minutosTrabalhado;
     Hora horasPendentes = this->getHorasPendentes();
     
-    if(!this->ponto(inicio, fim, &horasPendentes, &horasTrabalhado, &minutosTrabalhado))
-        return false;
+    if(!this->ponto(inicio, fim, &horasPendentes, &horasTrabalhado, &minutosTrabalhado)) {
+        cout << "Não é possivel registrar ponto, excedeu as horas diarias" << endl;
+        return;
+    }
 
     // Se o funcionário trabalhou menos que 8 horas no dia
     // adicionamos o tempo que ficou faltando nas horas pendentes
@@ -39,13 +42,34 @@ bool Vendedor::cadastrarPonto(Hora inicio, Hora fim) {
     }
 
     // Atribuimos as horas trabalhadas removendo as horas extras
-    Hora tempoTrabalhado(horasTrabalhado, minutosTrabalhado);
+    horasTrabalhado += this->getTempoTrabalhado().getHoras();
+    minutosTrabalhado += this->getTempoTrabalhado().getMinutos();
 
+    if(minutosTrabalhado >= 60) {
+        minutosTrabalhado -= 60;
+        horasTrabalhado += 1;
+    }
+
+    Hora tempoTrabalhado(horasTrabalhado, minutosTrabalhado);
+    vector<Hora*> semana = this->getSemana();
+    semana.push_back(&tempoTrabalhado);
+
+    cout << semana.size() << endl;
+
+    if(semana.size() == 5 || semana.size() == 6) {
+        if(!this->tempoSemana(semana)) {
+            cout << "Não é possivel registrar ponto, excedeu as horas semanais" << endl;
+            return;
+        } 
+        semana.clear();
+    }
+
+    this->setSemana(semana);
     this->setTempoTrabalhado(tempoTrabalhado);
 
     cout << "Ponto cadastrado com sucesso.\n" << endl;
 
-    return true;
+    return;
 }
 
 float Vendedor::calcularSalario() {

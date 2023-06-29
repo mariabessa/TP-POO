@@ -21,7 +21,8 @@ class Vendedor : public Funcionario {
         Vendedor(
             const string = "", const string = "", const string = "",
             const string = "", const TipoFuncionario = TipoFuncionario::Vendedor,
-            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(), 
+            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
+            const vector<Hora*> = vector<Hora*>(),
             const vector<Venda*> = vector<Venda*>()
         );
         // virtual ~Vendedor();
@@ -31,7 +32,7 @@ class Vendedor : public Funcionario {
 
         // bool cadastrarPonto(Hora, Hora);
         // float calcularSalario();
-        bool cadastrarPonto(Hora, Hora) override;
+        void cadastrarPonto(Hora, Hora) override;
         float calcularSalario() override;
 
         void adicionarVenda(Venda*);

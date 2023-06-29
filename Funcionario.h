@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "Pessoa.h"
 #include "Hora.h"
@@ -19,11 +20,13 @@ class Funcionario : public Pessoa {
         float salarioPorHora;
         Hora tempoTrabalhado;
         Hora horasPendentes;
+        vector<Hora*> semana;
     public:
         Funcionario(
             const string = "", const string = "", const string = "",
             const string = "", const TipoFuncionario = TipoFuncionario::Vendedor,
-            const float = 0.0, const Hora& = Hora(), const Hora& = Hora()
+            const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
+            const vector<Hora*> = vector<Hora*>()
         );
         // virtual ~Funcionario();
 
@@ -44,18 +47,22 @@ class Funcionario : public Pessoa {
         void setTipo(TipoFuncionario);
         TipoFuncionario getTipo() const;
 
+        void setSemana(vector<Hora*>);
+        vector<Hora*> getSemana() const;
+
         // Funções
 
         // Pega o horario de inicio e de fim do funcionário
         // Calcula o tempo trabalhado
         // Se o funcionario trabalhar mais que 10 horas em um dia, o sistema invalida
-        virtual bool cadastrarPonto(Hora, Hora) = 0;
+        virtual void cadastrarPonto(Hora, Hora) = 0;
         virtual float calcularSalario() = 0;
         virtual float bonificacao() = 0;    // Funcao que aumenta salario do funcionario
         // void ImprimeSalario();
 
     // private:
         bool ponto(Hora, Hora, Hora*, int*, int*);
+        bool tempoSemana(vector<Hora*>);
     // protected:
         float calculoSalarioPorHoras(TipoFuncionario);
 };

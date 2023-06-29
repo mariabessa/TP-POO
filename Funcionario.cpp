@@ -3,10 +3,10 @@
 Funcionario::Funcionario(
     const string nome, const string usuario, const string senha,
     const string funcao, const TipoFuncionario tipo, const float salarioPorHora,
-    const Hora& tempoTrabalhado, const Hora& horasPendentes
+    const Hora& tempoTrabalhado, const Hora& horasPendentes, const vector<Hora*> semana
 ):  Pessoa(nome, usuario, senha), salarioPorHora(salarioPorHora),
     funcao(funcao), tipo(tipo), tempoTrabalhado(tempoTrabalhado),
-    horasPendentes(horasPendentes) {}
+    horasPendentes(horasPendentes), semana(semana) {}
 
 void Funcionario::setSalarioPorHora(float salarioPorHora) {
     this->salarioPorHora = salarioPorHora;
@@ -41,6 +41,33 @@ void Funcionario::setTipo(TipoFuncionario tipo) {
 }
 TipoFuncionario Funcionario::getTipo() const {
     return tipo;
+}
+
+void Funcionario::setSemana(vector<Hora*> semana) {
+    this->semana = semana;
+}
+vector<Hora*> Funcionario::getSemana() const {
+    return semana;
+}
+
+bool Funcionario::tempoSemana(vector<Hora*> semana) {
+    Hora* tempoTotal = new Hora();
+    int horas;
+
+    for(auto dia:semana) {
+        cout << "asdfasd" << endl;
+        tempoTotal->setHoras(dia->getHoras() + tempoTotal->getHoras());
+        tempoTotal->setMinutos(dia->getMinutos() + tempoTotal->getMinutos());
+    }
+
+
+    horas = tempoTotal->getMinutos()/60;
+    tempoTotal->setMinutos(tempoTotal->getMinutos()%60);
+    tempoTotal->setHoras(tempoTotal->getHoras() + horas);
+
+    cout << tempoTotal->getHoras() << ":" << tempoTotal->getMinutos() << endl;
+
+    return (tempoTotal->getHoras() < 60) || (tempoTotal->getHoras() == 60 && tempoTotal->getMinutos() == 0);
 }
 
 bool Funcionario::ponto(Hora inicio, Hora fim, Hora* horasPendentes, int* horasTrabalhado, int* minutosTrabalhado) {

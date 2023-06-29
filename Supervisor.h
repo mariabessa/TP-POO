@@ -20,6 +20,7 @@ class Supervisor : public Funcionario {
             const string = "", const string = "", const string = "",
             const string = "", const TipoFuncionario = TipoFuncionario::Vendedor,
             const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
+            const vector<Hora*> = vector<Hora*>(),
             const vector<Vendedor*> = vector<Vendedor*>()
         );
         // virtual ~Supervisor();
@@ -27,7 +28,7 @@ class Supervisor : public Funcionario {
         void setVendedor(vector<Vendedor*>);
         vector<Vendedor*> getVendedor() const;
 
-        bool cadastrarPonto(Hora, Hora) override;
+        void cadastrarPonto(Hora, Hora) override;
         float calcularSalario() override;
 
         // void adicionarVendedor(Vendedor);

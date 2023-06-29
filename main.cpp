@@ -159,6 +159,8 @@ void cadastrarPonto(Funcionario *funcionario) {
     pontoFim = new Hora(horasPontoFim, minutosPontoFim);
 
     funcionario->cadastrarPonto(*pontoInicio, *pontoFim);
+
+    cout << funcionario->getTempoTrabalhado().getHoras() << ":" << funcionario->getTempoTrabalhado().getMinutos() << endl;
 }
 
 void listarVendas(Vendedor *vendedor) {
