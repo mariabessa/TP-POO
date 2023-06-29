@@ -4,9 +4,10 @@
 #include "Vendedor.h"
 #include "Venda.h"
 #include "Hora.h"
-
 #include <iostream>
 #include <vector>
+#include <stdexcept>
+
 
 using namespace std;
 
@@ -19,85 +20,95 @@ void cadastrarFuncionario(Chefe* chefe, vector<Funcionario*> funcionarios) {
     
     cout << "Informe os dados do Funcionario" << endl;
     cout << "Nome: ";
-    cin >> nome;
+    cin.ignore();
+    getline(cin, nome);
     cout << endl << "Usuario: ";
-    cin >> usuario;
+    getline (cin, usuario);
     cout << endl << "Senha: ";
-    cin >> senha;
+    getline (cin, senha);
     cout << endl << "Salário por hora: ";
     cin >> salarioPorHora;
     cout << endl << "Função: ";
-    cin >> funcao;
+    getline (cin, funcao);
     do {
-        cout << endl << "Tipo: " << endl << "   0- Vendedor" << endl << "   1- Supervisor";
+        cout << endl << "Tipo: " << endl << "   0- Vendedor" << endl << "   1- Supervisor" << endl;
         cin >> tipoFuncionario;
-
+        cout << "tipo: " << tipoFuncionario;
         if(tipoFuncionario == 0)
             funcionario = new Vendedor(nome, usuario, senha, funcao, TipoFuncionario::Vendedor, salarioPorHora);
         else if(tipoFuncionario == 1)
             funcionario = new Supervisor(nome, usuario, senha, funcao, TipoFuncionario::Supervisor, salarioPorHora);
         else
-            cout << "Informe um tipo válido" << endl;
-    } while(tipoFuncionario != 0 || tipoFuncionario != 1);
+            cout << "Informe um t&&o válido" << endl;
+    } while(tipoFuncionario != 0 && tipoFuncionario != 1);
 
     chefe->adicionarFuncionario(funcionario);
     funcionarios.push_back(funcionario);
-
     delete funcionario;
 }
 
 void telaChefe(Chefe *chefe, vector<Funcionario*> funcionarios) {
-    int opcao;
-
+    string opcaoStr;
+    int opcao = -1;
+    bool verifica;
     do {
-        cout << "---------------------Tela Chefe---------------------" << endl;
-        cout << "    0- Cadastrar funcionário" << endl;
-        cout << "    1- Listar funcionários cadastrados" << endl;
-        cout << "    2- Checar ponto" << endl;
-        cout << "    3- Calcular salário" << endl;
-        cout << "    4- Voltar para o Menu Inicial" << endl;
+        verifica = 1; 
+        try {
+            cout << "---------------------Tela Chefe---------------------" << endl;
+            cout << "    0- Cadastrar funcionário" << endl;
+            cout << "    1- Listar funcionários cadastrados" << endl;
+            cout << "    2- Checar ponto" << endl;
+            cout << "    3- Calcular salário" << endl;
+            cout << "    4- Voltar para o Menu Inicial" << endl;
 
-        cout << "Informe a opção que deseja execultar:" << endl;
-        cin >> opcao;
-
-        switch (opcao) {
-            case 0:
-                // Funcionario funcionario = new Funcionario(...dados)
-                // funcionarios.lista(add funcionario)
-                cadastrarFuncionario(chefe, funcionarios);
-                break;
-            
-            case 1:
-                // funcionarios.map((funcionario) => return funcionario.dados)
-                chefe->listarFuncionarios();
-                break;
-            
-            case 2:
-                // Passa por todos os funcionarios e informa os seus dados(Nome, Função, Tempo Trabalhado)
-                for(auto funcionario:chefe->getFuncionarios()) {
-                    cout << "Nome: " << funcionario->getNome() << endl;
-                    cout << "Função: " << funcionario->getFuncao() << endl;
-                    cout << "Tempo Trabalhado: " << funcionario->calculoSalarioPorHoras(funcionario->getTipo())/funcionario->getSalarioPorHora() << " horas" << endl;
-                }
-                break;
-            
-            case 3:
-                // Passa por todos os funcionarios e informa os seus dados(Nome, Função, Salário)
-                for(auto funcionario:chefe->getFuncionarios()) {
-                    cout << "Nome: " << funcionario->getNome() << endl;
-                    cout << "Função: " << funcionario->getFuncao() << endl;
-                    cout << "Salário: " << funcionario->calculoSalarioPorHoras(funcionario->getTipo()) << " horas" << endl;
-                }
-                break;
-            
-            case 4:
-                break;
-            
-            default:
-                cout << "Informe uma opção válida.\n" << endl;
-                break;
+            cout << "Informe a opção que deseja execultar:" << endl;
+            cin >> opcaoStr;
+            opcao = stoi(opcaoStr);
+        } catch (const invalid_argument& e) {
+            cerr << "Erro: Entrada inválida. Digite um número válido." << endl;
+            verifica = 0;
         }
-    } while(opcao != 4);
+
+        if(verifica){
+            switch (opcao) {
+                case 0:
+                    // Funcionario funcionario = new Funcionario(...dados)
+                    // funcionarios.lista(add funcionario)
+                    cadastrarFuncionario(chefe, funcionarios);
+                    break;
+                
+                case 1:
+                    // funcionarios.map((funcionario) => return funcionario.dados)
+                    chefe->listarFuncionarios();
+                    break;
+                
+                case 2:
+                    // Passa por todos os funcionarios e informa os seus dados(Nome, Função, Tempo Trabalhado)
+                    for(auto funcionario:chefe->getFuncionarios()) {
+                        cout << "Nome: " << funcionario->getNome() << endl;
+                        cout << "Função: " << funcionario->getFuncao() << endl;
+                        cout << "Tempo Trabalhado: " << funcionario->calculoSalarioPorHoras(funcionario->getTipo())/funcionario->getSalarioPorHora() << " horas" << endl;
+                    }
+                    break;
+                
+                case 3:
+                    // Passa por todos os funcionarios e informa os seus dados(Nome, Função, Salário)
+                    for(auto funcionario:chefe->getFuncionarios()) {
+                        cout << "Nome: " << funcionario->getNome() << endl;
+                        cout << "Função: " << funcionario->getFuncao() << endl;
+                        cout << "Salário: " << funcionario->calculoSalarioPorHoras(funcionario->getTipo()) << " horas" << endl;
+                    }
+                    break;
+                
+                case 4:
+                    break;
+                
+                default:
+                    cout << "Informe uma opção válida.\n" << endl;
+                    break;
+            }
+        }
+    } while(opcao != 4 && verifica != 0);
 }
 
 void cadastrarPonto(Funcionario *funcionario) {
@@ -319,9 +330,8 @@ Chefe* iniciarChefe() {
     Chefe* chefe;
 
     cout << "Cadastre o Chefe:" << endl;
-    cout << "Informe seu:" << endl;
-    cout << "Nome: ";
-    cin >> nome;
+    cout << "Informe seu nome: ";
+    getline(cin, nome);
     
     cout << "Quer adicionar Usuario e Senha?" << endl;
     cout << "   0- Não (se mantem como padrão Usuario = 'admin' e Senha = 'admin')" << endl;

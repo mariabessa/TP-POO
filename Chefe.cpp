@@ -14,13 +14,15 @@ vector<Funcionario*> Chefe::getFuncionarios() const {
 }
 
 void Chefe::adicionarFuncionario(Funcionario* funcionario) {
+    cout << "entrou";
     this->funcionarios.push_back(funcionario);
 }
 
 void Chefe::listarFuncionarios() {
-    for (auto i = this->funcionarios.begin(); i != this->funcionarios.end(); ++i)
+    // for (auto i = this->funcionarios.begin(); i != this->funcionarios.end(); ++i)
+    for (auto funcionario:funcionarios)
         // cout << (*i).getNome() << endl;
-        cout << (*i)->getNome() << endl;
+        cout << funcionario->getNome() << endl;
 }
 
 // bool Chefe::logar(string usuario, string senha) {

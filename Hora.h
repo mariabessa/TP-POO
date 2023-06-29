@@ -9,6 +9,9 @@ using namespace std;
 
 class Hora {
     private:
+        // Dia diaDoMes;
+        // diaDoMes->getDIa
+        // diaDoMes->getMes
         int horas;
         int minutos;
     public:
