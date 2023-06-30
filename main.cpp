@@ -11,9 +11,9 @@
 using namespace std;
 
 void teste(vector<Funcionario*> *funcionarios) {
-    Funcionario *t1 = new Vendedor("Gabs", "gabs", "senha");
-    Funcionario *t2 = new Supervisor("Andre", "andre", "senha");
-    Funcionario *t3 = new Vendedor("Bessa", "bessa", "senha");
+    Funcionario *t1 = new Vendedor("Gabs", "gabs", "senha", "vender", TipoFuncionario::Vendedor, 2);
+    Funcionario *t2 = new Supervisor("Joao", "jao", "senha", "supervisionar", TipoFuncionario::Supervisor, 3);
+    Funcionario *t3 = new Vendedor("Bessa", "bessa", "senha", "vender", TipoFuncionario::Vendedor, 5);
     
     funcionarios->push_back(t1);
     funcionarios->push_back(t2);
@@ -115,19 +115,21 @@ void telaChefe(Chefe *chefe, vector<Funcionario*> *funcionarios) {
                 
                 case 2:
                     // Passa por todos os funcionarios e informa os seus dados(Nome, Função, Tempo Trabalhado)
-                    for(auto funcionario:chefe->getFuncionarios()) {
+                    for(auto funcionario:(*funcionarios)) {
                         cout << "Nome: " << funcionario->getNome() << endl;
                         cout << "Função: " << funcionario->getFuncao() << endl;
-                        cout << "Tempo Trabalhado: " << funcionario->calculoSalarioPorHoras(funcionario->getTipo())/funcionario->getSalarioPorHora() << " horas" << endl;
+                        cout << "Tempo Trabalhado: " << funcionario->calcularSalario()/funcionario->getSalarioPorHora() << " horas" << endl;
                     }
                     break;
                 
                 case 3:
                     // Passa por todos os funcionarios e informa os seus dados(Nome, Função, Salário)
-                    for(auto funcionario:chefe->getFuncionarios()) {
+                    
+                    
+                    for(auto funcionario:(*funcionarios)) {
                         cout << "Nome: " << funcionario->getNome() << endl;
                         cout << "Função: " << funcionario->getFuncao() << endl;
-                        cout << "Salário: " << funcionario->calculoSalarioPorHoras(funcionario->getTipo()) << " horas" << endl;
+                        cout << "Salário: " << funcionario->calcularSalario() << "R$" << endl;
                     }
                     break;
                 
@@ -170,10 +172,13 @@ void listarVendas(Vendedor *vendedor) {
         cout << "Valor Venda: " << venda->getValor() << endl;
 }
 
-void telaFuncionario(Funcionario *funcionario) {
+void telaFuncionario(Funcionario *funcionario, vector<Funcionario*> *funcionarios) {
     int opcao;
     Vendedor* vendedor = dynamic_cast<Vendedor*>(funcionario);
-    Supervisor* supervisor = dynamic_cast<Supervisor*>(funcionario);
+    vector<Vendedor*> vendedores;
+    for(auto func:(*funcionarios))
+        vendedores.push_back(dynamic_cast<Vendedor*>(func));
+    // Supervisor* supervisor = dynamic_cast<Supervisor*>(funcionario);
 
     do {
         cout << "------------------Tela Funcionário------------------" << endl;
@@ -197,7 +202,7 @@ void telaFuncionario(Funcionario *funcionario) {
             case 1:
                 // int salario = calcSalario(funcionario.dados)
                 // print salario
-                cout << "Salário" << funcionario->calculoSalarioPorHoras(funcionario->getTipo()) << endl;
+                cout << "Salário: " << funcionario->calcularSalario() << "R$" << endl;
                 break;
             
             case 2: {
@@ -217,15 +222,17 @@ void telaFuncionario(Funcionario *funcionario) {
                 // funcionario.adicionarVenda(venda);
                 vendedor->adicionarVenda(venda);
 
-                delete venda;
+                // delete venda;
 
                 break;
             }
 
             case 3:
                 if(funcionario->getTipo() == TipoFuncionario::Supervisor) {
-                    for(auto vendedor:supervisor->getVendedor())            
+                    for(auto vendedor:vendedores) {
+                        // cout << vendedor.get ->getNome();
                         listarVendas(vendedor);
+                    }            
                     break;
                 }
                 // if(funcionario.isSupervisor)
@@ -270,7 +277,7 @@ bool login(Chefe *chefe, vector<Funcionario*> *funcionarios, int tipoLogin, stri
         for(auto funcionario:(*funcionarios))
             if(funcionario->logar(usuario, senha)) {
                 achou = true;
-                telaFuncionario(funcionario);
+                telaFuncionario(funcionario, funcionarios);
             }
                 
         // Se achar um funcionario q os dados batem c os q foram passados, vamos para a tela do funcionario

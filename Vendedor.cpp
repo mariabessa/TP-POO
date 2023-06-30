@@ -73,14 +73,16 @@ void Vendedor::cadastrarPonto(Hora inicio, Hora fim) {
 }
 
 float Vendedor::calcularSalario() {
-    return calculoSalarioPorHoras(this->getTipo()) + bonificacao();
+    return this->calculoSalarioPorHoras(this->getTipo()) + bonificacao();
 }
 
 float Vendedor::bonificacao() {
     float valorTotal = 0.0;
 
-    for (auto i = this->vendas.begin(); i != this->vendas.end(); ++i)
-        valorTotal += (*i)->getValor() * 0.1;
+    // for (auto i = this->vendas.begin(); i != this->vendas.end(); ++i)
+    for (auto venda:this->getVendas())
+        // valorTotal += (*i)->getValor() * 0.1;
+        valorTotal += venda->getValor() * 0.1;
     
     return valorTotal;
 }
