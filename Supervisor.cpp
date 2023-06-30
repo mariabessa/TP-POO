@@ -1,6 +1,5 @@
 #include "Supervisor.h"
 
-// /*
 Supervisor::Supervisor(
     const string nome, const string usuario, const string senha,
     const string funcao, const TipoFuncionario tipo, const float salarioPorHora,
@@ -10,7 +9,6 @@ Supervisor::Supervisor(
         nome, usuario, senha, funcao, tipo, salarioPorHora, tempoTrabalhado, 
         horasPendentes, semana
     ), vendedores(vendedores) {}
-// */
 
 void Supervisor::setVendedor(vector<Vendedor*> Vendedor) {
     this->vendedores = Vendedor;
@@ -76,14 +74,3 @@ float Supervisor::bonificacao() {
     
     return valorTotal;
 }
-
-/*
-void Supervisor::adicionarVendedor(Vendedor vendedor) {
-    this->vendedores.push_back(vendedor);
-}
-
-void Supervisor::listarVendedores() {
-    for (auto i = this->vendedores.begin(); i != this->vendedores.end(); ++i)
-        cout << (*i).getNome() << endl;
-}
-*/

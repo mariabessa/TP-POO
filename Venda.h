@@ -12,8 +12,6 @@ class Venda {
         
     public:
         Venda(const float = 0.0);
-        // virtual ~Venda();
-
         // Getters e Setters
 
         void setValor(float);

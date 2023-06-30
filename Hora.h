@@ -9,14 +9,11 @@ using namespace std;
 
 class Hora {
     private:
-        // int mes;
-        // int dia;
         int horas;
         int minutos;
     public:
         Hora(const int = 0, const int = 0);
-        // virtual ~Hora();
-
+        
         void setHoras(int);
         int getHoras() const;
 

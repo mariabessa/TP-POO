@@ -9,10 +9,10 @@ Vendedor::Vendedor(
         nome, usuario, senha, funcao, tipo, salarioPorHora, tempoTrabalhado, 
         horasPendentes, semana
     ), vendas(vendas) {}
-
 void Vendedor::setVendas(vector<Venda*> vendas) {
     this->vendas = vendas;
 }
+
 vector<Venda*> Vendedor::getVendas() const {
     return this->vendas;
 }
@@ -88,10 +88,3 @@ float Vendedor::bonificacao() {
 void Vendedor::adicionarVenda(Venda* venda) {
     this->vendas.push_back(venda);
 }
-
-/*
-void Vendedor::listarVendas() {
-    for (auto i = this->vendas.begin(); i != this->vendas.end(); ++i)
-        cout << (*i)->getValor() << endl;
-}
-*/

@@ -13,8 +13,7 @@ class Pessoa {
         string senha;
     public:
         Pessoa(const string = "", const string = "", const string = "");
-        // virtual ~Pessoa();
-
+        
         void setNome(string);
         string getNome() const;
 

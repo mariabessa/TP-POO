@@ -32,7 +32,7 @@ Hora Funcionario::getHorasPendentes() const {
 void Funcionario::setFuncao(string funcao) {
     this->funcao = funcao;
 }
-const string &Funcionario::getFuncao() const {
+const string Funcionario::getFuncao() const {
     return funcao;
 }
 
@@ -88,7 +88,6 @@ bool Funcionario::ponto(Hora inicio, Hora fim, Hora* horasPendentes, int* horasT
     }
 
     // Hora horasPendentes = this->getHorasPendentes();
-
     // Se o funcionário trabalhar mais que 8 horas no dia
     // atribuímos essas horas extras para outra variável
     if (*horasTrabalhado <= 10 && (*horasTrabalhado == 8 && *minutosTrabalhado > 0)) {

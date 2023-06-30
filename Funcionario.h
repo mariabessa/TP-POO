@@ -28,8 +28,6 @@ class Funcionario : public Pessoa {
             const float = 0.0, const Hora& = Hora(), const Hora& = Hora(),
             const vector<Hora*> = vector<Hora*>()
         );
-        // virtual ~Funcionario();
-
         // Getters e Setters
 
         void setSalarioPorHora(float);
@@ -42,7 +40,7 @@ class Funcionario : public Pessoa {
         Hora getHorasPendentes() const;
 
         void setFuncao(string);
-        const string &getFuncao() const;
+        const string getFuncao() const;
         
         void setTipo(TipoFuncionario);
         TipoFuncionario getTipo() const;
@@ -58,12 +56,9 @@ class Funcionario : public Pessoa {
         virtual void cadastrarPonto(Hora, Hora) = 0;
         virtual float calcularSalario() = 0;
         virtual float bonificacao() = 0;    // Funcao que aumenta salario do funcionario
-        // void ImprimeSalario();
 
-    // private:
         bool ponto(Hora, Hora, Hora*, int*, int*);
         bool tempoSemana(vector<Hora*>);
-    // protected:
         float calculoSalarioPorHoras(TipoFuncionario);
 };
 
