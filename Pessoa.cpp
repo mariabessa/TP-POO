@@ -1,14 +1,3 @@
-<<<<<<< Updated upstream
-#include "Pessoa.h"
-#include <string>
-using namespace std;
-
-Pessoa::Pessoa(string n) : nome{n} { }
-
-void Pessoa :: imprime(){
-    cout << "Nome: " << nome << "\n";
-}
-=======
 #include "Pessoa.h"
 
 Pessoa::Pessoa(
@@ -39,4 +28,3 @@ const string &Pessoa::getSenha() const {
 bool Pessoa::logar(string usuario, string senha) {
     return (this->getUsuario() == usuario && this->getSenha() == senha);
 }
->>>>>>> Stashed changes

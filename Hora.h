@@ -1,15 +1,3 @@
-<<<<<<< Updated upstream
-#ifndef HORA_H
-#define HORA_H
-
-class Tempo{
-    private:
-        int hora, minuto;
-    public:
-        Tempo(int, int);
-};
-
-=======
 #ifndef HORA
 #define HORA
 
@@ -36,5 +24,4 @@ class Hora {
         int getMinutos() const;
 };
 
->>>>>>> Stashed changes
 #endif

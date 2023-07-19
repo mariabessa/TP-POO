@@ -1,13 +1,3 @@
-<<<<<<< Updated upstream
-#include "pessoa.h"
-#include <iostream>
-
-using namespace std;
-
-int main(){
-
-}
-=======
 #include "Chefe.h"
 #include "Funcionario.h"
 #include "Supervisor.h"
@@ -406,4 +396,3 @@ int main() {
     return 0;
 }
 
->>>>>>> Stashed changes

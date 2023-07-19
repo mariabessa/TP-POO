@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-#ifndef VENDA_H
-#define VENDA_H
-
-=======
 #ifndef VENDA_H
 #define VENDA_H
 
@@ -25,5 +20,4 @@ class Venda {
         float getValor() const;
 };
 
->>>>>>> Stashed changes
 #endif

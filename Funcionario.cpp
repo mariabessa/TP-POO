@@ -1,19 +1,3 @@
-<<<<<<< Updated upstream
-#include "Funcionario.h"
-
-Funcionario::Funcionario(string n, double s) : Pessoa{nome}, salarioHora{s}{ }
-
-double Funcionario::calcularSalario(){
-    return salarioHora * horasTrabalhadas;
-}
-
-// void Funcionario::ImprimeSalario(){
-//     cout << "Salário :" << calcularSalario() << endl;
-// }
-
-void Funcionario::cadastrarPonto(double horas){
-    horasTrabalhadas += horas;
-=======
 #include "Funcionario.h"
 
 Funcionario::Funcionario(
@@ -153,5 +137,4 @@ float Funcionario::calculoSalarioPorHoras(TipoFuncionario tipoFuncionario) {
     }
 
     return horasTrabalhado * salarioPorHora + (minutosTrabalhado * salarioPorHora)/60;
->>>>>>> Stashed changes
 }

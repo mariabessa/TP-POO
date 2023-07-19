@@ -1,9 +1,3 @@
-<<<<<<< Updated upstream
-#include "Supervisor.h"
-
-Supervisor::Supervisor(string n, double s) : Funcionario{n, s} { }
-
-=======
 #include "Supervisor.h"
 
 // /*
@@ -93,4 +87,3 @@ void Supervisor::listarVendedores() {
         cout << (*i).getNome() << endl;
 }
 */
->>>>>>> Stashed changes
